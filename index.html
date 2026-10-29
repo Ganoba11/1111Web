@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Once Once Fit — Jumping en Posadas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fucsia:#FF00AC;
+  --violeta:#783DF9;
+  --negro:#1D1D1B;
+  --negro-2:#252523;
+  --blanco:#F5F3FF;
+  --gris:#A6A3B8;
+  --font:'Montserrat',system-ui,sans-serif;
+  --radio:18px;
+  --max:1180px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font);
+  background:var(--negro);
+  color:var(--blanco);
+  line-height:1.55;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+/* ===== NAV ===== */
+header.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:18px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  backdrop-filter:blur(14px);
+  background:rgba(29,29,27,.55);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  transition:background .4s ease;
+}
+.logo{
+  font-weight:900;font-size:1.15rem;letter-spacing:-.02em;
+}
+.logo span{color:var(--fucsia)}
+.nav-links{display:none;gap:28px;font-size:.9rem;font-weight:500}
+.nav-links a{opacity:.75;transition:opacity .3s,color .3s}
+.nav-links a:hover{opacity:1;color:var(--fucsia)}
+.burger{
+  width:42px;height:42px;display:grid;place-items:center;
+  background:none;border:none;cursor:pointer;color:var(--blanco);
+}
+.burger span{
+  display:block;width:24px;height:2px;background:currentColor;
+  position:relative;transition:transform .35s ease;
+}
+.burger span::before,.burger span::after{
+  content:"";position:absolute;left:0;width:24px;height:2px;
+  background:currentColor;transition:transform .35s ease,top .35s ease;
+}
+.burger span::before{top:-7px}
+.burger span::after{top:7px}
+.burger.open span{transform:rotate(45deg)}
+.burger.open span::before{top:0;transform:rotate(90deg)}
+.burger.open span::after{top:0;opacity:0}
+
+/* Menú móvil */
+.menu-movil{
+  position:fixed;inset:0;z-index:99;
+  background:linear-gradient(160deg,var(--negro) 0%, #2a0f2a 100%);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:0 32px;gap:6px;
+  transform:translateX(100%);
+  transition:transform .5s cubic-bezier(.7,0,.2,1);
+}
+.menu-movil.open{transform:translateX(0)}
+.menu-movil a{
+  font-size:2rem;font-weight:800;letter-spacing:-.02em;
+  padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08);
+  opacity:0;transform:translateY(18px);
+  transition:opacity .4s ease,transform .4s ease,color .3s;
+}
+.menu-movil.open a{opacity:1;transform:translateY(0)}
+.menu-movil.open a:nth-child(1){transition-delay:.15s}
+.menu-movil.open a:nth-child(2){transition-delay:.22s}
+.menu-movil.open a:nth-child(3){transition-delay:.29s}
+.menu-movil.open a:nth-child(4){transition-delay:.36s}
+.menu-movil.open a:nth-child(5){transition-delay:.43s}
+.menu-movil a:hover{color:var(--fucsia)}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:100vh;position:relative;
+  display:flex;align-items:center;
+  padding:120px 24px 80px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,0,172,.28), transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(120,61,249,.32), transparent 50%),
+    var(--negro);
+}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background-image:repeating-linear-gradient(90deg,transparent 0,transparent 60px,rgba(255,255,255,.025) 60px,rgba(255,255,255,.025) 61px);
+  pointer-events:none;
+}
+.hero-inner{position:relative;z-index:2;max-width:var(--max);margin:0 auto;width:100%}
+.beats{display:flex;gap:5px;margin-bottom:28px;align-items:flex-end;height:34px}
+.beats i{
+  display:block;width:4px;background:linear-gradient(var(--fucsia),var(--violeta));
+  border-radius:2px;animation:beat 1.1s ease-in-out infinite;
+}
+.beats i:nth-child(1){height:14px;animation-delay:0s}
+.beats i:nth-child(2){height:26px;animation-delay:.1s}
+.beats i:nth-child(3){height:34px;animation-delay:.2s}
+.beats i:nth-child(4){height:20px;animation-delay:.3s}
+.beats i:nth-child(5){height:30px;animation-delay:.4s}
+.beats i:nth-child(6){height:16px;animation-delay:.5s}
+@keyframes beat{0%,100%{transform:scaleY(.5)}50%{transform:scaleY(1)}}
+
+.hero h1{
+  font-size:clamp(3rem,10vw,7rem);
+  font-weight:900;line-height:.92;letter-spacing:-.04em;
+  margin-bottom:26px;
+}
+.hero h1 .line{display:block;overflow:hidden}
+.hero h1 .line span{display:block;transform:translateY(110%);animation:rise .9s cubic-bezier(.2,.8,.2,1) forwards}
+.hero h1 .line:nth-child(1) span{animation-delay:.1s}
+.hero h1 .line:nth-child(2) span{animation-delay:.25s;color:var(--fucsia)}
+.hero h1 .line:nth-child(3) span{animation-delay:.4s}
+@keyframes rise{to{transform:translateY(0)}}
+
+.hero p.claim{
+  font-size:1.05rem;max-width:520px;color:var(--gris);
+  margin-bottom:36px;opacity:0;animation:fadeUp .8s .7s ease forwards;
+}
+.hero .cta-row{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .9s ease forwards}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+.hero p.claim,.hero .cta-row{transform:translateY(16px)}
+
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:16px 28px;border-radius:100px;
+  font-weight:700;font-size:.95rem;letter-spacing:.01em;
+  transition:transform .3s ease,box-shadow .3s ease,background .3s ease;
+  cursor:pointer;border:none;
+}
+.btn-primary{
+  background:linear-gradient(120deg,var(--fucsia),var(--violeta));
+  color:#fff;
+  box-shadow:0 8px 30px rgba(255,0,172,.35);
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(255,0,172,.55)}
+.btn-ghost{
+  background:transparent;color:var(--blanco);
+  border:1.5px solid rgba(255,255,255,.25);
+}
+.btn-ghost:hover{border-color:var(--fucsia);color:var(--fucsia);transform:translateY(-3px)}
+
+/* ===== SECCIONES ===== */
+section{padding:100px 0;position:relative}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+.eyebrow{
+  display:inline-block;font-size:.78rem;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--fucsia);margin-bottom:18px;
+}
+h2{
+  font-size:clamp(2rem,5.5vw,3.4rem);font-weight:900;
+  line-height:1.02;letter-spacing:-.03em;margin-bottom:22px;
+}
+h2 em{font-style:normal;color:var(--fucsia)}
+
+/* Quiénes somos */
+.about{background:var(--negro-2)}
+.about-grid{display:grid;gap:48px;align-items:center}
+.about-text p{color:var(--gris);margin-bottom:16px;font-size:1.02rem}
+.badge{
+  display:inline-flex;align-items:center;gap:10px;
+  margin-top:18px;padding:12px 20px;border-radius:100px;
+  background:linear-gradient(120deg,rgba(255,0,172,.15),rgba(120,61,249,.15));
+  border:1px solid rgba(255,0,172,.35);
+  font-size:.85rem;font-weight:600;
+}
+.badge .dot{width:8px;height:8px;border-radius:50%;background:var(--fucsia);box-shadow:0 0 12px var(--fucsia)}
+.about-img{
+  aspect-ratio:4/5;border-radius:var(--radio);position:relative;
+  background:linear-gradient(150deg,var(--violeta),var(--fucsia));
+  overflow:hidden;display:grid;place-items:center;
+  color:rgba(255,255,255,.9);font-weight:700;text-align:center;padding:24px;
+}
+.about-img::after{
+  content:"";position:absolute;inset:0;
+  background-image:repeating-linear-gradient(45deg,transparent 0,transparent 14px,rgba(0,0,0,.08) 14px,rgba(0,0,0,.08) 15px);
+}
+
+/* Beneficios */
+.benefits-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:44px;
+}
+.benefit{
+  padding:28px 22px;border-radius:var(--radio);
+  background:var(--negro-2);border:1px solid rgba(255,255,255,.06);
+  transition:border-color .35s ease,transform .35s ease,background .35s ease;
+}
+.benefit:hover{border-color:rgba(255,0,172,.5);transform:translateY(-4px);background:#2a2a27}
+.benefit svg{width:34px;height:34px;margin-bottom:16px;color:var(--fucsia)}
+.benefit h3{font-size:1.05rem;font-weight:800;margin-bottom:8px;letter-spacing:-.01em}
+.benefit p{font-size:.9rem;color:var(--gris)}
+
+/* Planes */
+.plans{background:var(--negro-2)}
+.plans-grid{display:grid;gap:18px;margin-top:44px}
+.plan{
+  padding:30px 26px;border-radius:var(--radio);
+  background:var(--negro);border:1px solid rgba(255,255,255,.07);
+  position:relative;transition:transform .35s ease,border-color .35s ease;
+}
+.plan:hover{transform:translateY(-5px);border-color:rgba(120,61,249,.6)}
+.plan h3{
+  font-size:.82rem;font-weight:700;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--violeta);margin-bottom:6px;
+}
+.plan .dias{font-size:1.25rem;font-weight:800;margin-bottom:20px;letter-spacing:-.01em}
+.plan .precio{display:flex;flex-direction:column;gap:6px;font-size:.92rem}
+.plan .precio strong{color:var(--fucsia);font-weight:800}
+.plan .precio span{color:var(--gris)}
+
+/* Contacto */
+.contact-grid{display:grid;gap:40px;margin-top:44px}
+.contact-info{display:flex;flex-direction:column;gap:22px}
+.contact-item{display:flex;gap:16px;align-items:flex-start}
+.contact-item svg{width:24px;height:24px;color:var(--fucsia);flex-shrink:0;margin-top:2px}
+.contact-item .label{font-size:.78rem;text-transform:uppercase;letter-spacing:.15em;color:var(--gris);margin-bottom:3px}
+.contact-item .val{font-weight:600;font-size:1.02rem}
+.contact-cta{
+  border-radius:var(--radio);padding:40px 30px;
+  background:linear-gradient(140deg,var(--violeta),var(--fucsia));
+  display:flex;flex-direction:column;justify-content:center;gap:18px;
+}
+.contact-cta h3{font-size:1.5rem;font-weight:900;letter-spacing:-.02em;line-height:1.1}
+.contact-cta p{font-size:.95rem;opacity:.9}
+.contact-cta .btn{background:#fff;color:var(--negro);align-self:flex-start}
+.contact-cta .btn:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.3)}
+
+/* Footer */
+footer{padding:40px 0;border-top:1px solid rgba(255,255,255,.08);text-align:center;font-size:.85rem;color:var(--gris)}
+footer a{color:var(--fucsia)}
+
+/* WhatsApp flotante */
+.wa-float{
+  position:fixed;bottom:22px;right:22px;z-index:90;
+  width:58px;height:58px;border-radius:50%;
+  background:#25D366;display:grid;place-items:center;
+  box-shadow:0 8px 24px rgba(37,211,102,.5);
+  animation:pulse 2.4s ease-in-out infinite;
+}
+.wa-float svg{width:30px;height:30px;color:#fff}
+@keyframes pulse{0%,100%{box-shadow:0 8px 24px rgba(37,211,102,.5)}50%{box-shadow:0 8px 24px rgba(37,211,102,.5),0 0 0 12px rgba(37,211,102,.15)}}
+
+/* Desktop */
+@media(min-width:820px){
+  .nav-links{display:flex}
+  .burger{display:none}
+  .about-grid{grid-template-columns:1.1fr 1fr;gap:70px}
+  .benefits-grid{grid-template-columns:repeat(4,1fr)}
+  .plans-grid{grid-template-columns:repeat(2,1fr)}
+  .contact-grid{grid-template-columns:1fr 1fr;gap:60px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+  .hero h1 .line span{transform:none}
+  .hero p.claim,.hero .cta-row{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="logo">ONCE <span>ONCE</span> FIT</div>
+  <nav class="nav-links">
+    <a href="#nosotros">Quiénes somos</a>
+    <a href="#beneficios">Beneficios</a>
+    <a href="#planes">Planes</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+  <button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span></button>
+</header>
+
+<div class="menu-movil" id="menu">
+  <a href="#nosotros">Quiénes somos</a>
+  <a href="#beneficios">Beneficios</a>
+  <a href="#planes">Planes</a>
+  <a href="#contacto">Contacto</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="beats"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <h1>
+      <span class="line"><span>MOVIMIENTO</span></span>
+      <span class="line"><span>QUE SE</span></span>
+      <span class="line"><span>SIENTE.</span></span>
+    </h1>
+    <p class="claim">Clases de Jumping en Posadas bajo licencia oficial KMJUMPFIT. Energía, bienestar y comunidad en cada salto. <!-- TEXTO: reemplazar si querés otro claim --></p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://wa.me/5493764323974?text=Hola!%20Quiero%20info%20sobre%20las%20clases%20de%20Jumping" target="_blank" rel="noopener">Reservar por WhatsApp</a>
+      <a class="btn btn-ghost" href="#planes">Ver planes</a>
+    </div>
+  </div>
+</section>
+
+<!-- QUIÉNES SOMOS -->
+<section id="nosotros" class="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <span class="eyebrow">Quiénes somos</span>
+        <h2>El único estudio en Argentina con <em>licencia KMJUMPFIT</em>.</h2>
+        <p>En Once Once Fit entrenamos sobre el minitramp al ritmo de la música. Cada clase combina cardio, tonificación y diversión para que salgas distinta de como entraste.</p>
+        <p>Somos comunidad: un espacio donde moverte se siente bien, sin presión y con energía real.</p> <!-- TEXTO: ajustar a tu voz -->
+        <div class="badge"><span class="dot"></span> Licencia oficial KMJUMPFIT</div>
+      </div>
+      <div class="about-img reveal">
+        <!-- FOTO: imagen de una clase de jumping con minitramps, luces y movimiento -->
+        <span>FOTO DE LA CLASE<br><small style="font-weight:400;opacity:.8">(reemplazar este bloque por una imagen)</small></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFICIOS -->
+<section id="beneficios">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Beneficios</span>
+      <h2>Por qué el <em>jumping</em> engancha.</h2>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M5 9l7-7 7 7"/></svg>
+        <h3>Cardio real</h3>
+        <p>Quemás calorías sin darte cuenta, saltando al ritmo de la música.</p>
+      </div>
+      <div class="benefit reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <h3>Bajo impacto</h3>
+        <p>El minitramp absorbe el impacto: cuidás rodillas y articulaciones.</p>
+      </div>
+      <div class="benefit reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.5-7-11a7 7 0 0114 0c0 6.5-7 11-7 11z"/></svg>
+        <h3>Tonificás todo</h3>
+        <p>Trabajás piernas, glúteos, abdomen y core en una sola clase.</p>
+      </div>
+      <div class="benefit reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.5"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5M14 20c0-2 2-3.5 4-3.5s4 1.5 4 3.5"/></svg>
+        <h3>Comunidad</h3>
+        <p>Entrenás con otras personas que vienen a pasarla bien.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANES -->
+<section id="planes" class="plans">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Horarios y valores</span>
+      <h2>Elegí tu <em>plan</em>.</h2>
+    </div>
+    <div class="plans-grid">
+      <div class="plan reveal">
+        <h3>Plan 1</h3>
+        <div class="dias">Martes y jueves</div>
+        <div class="precio">
+          <strong>$33.000 efectivo</strong>
+          <span>$34.980 transferencia</span>
+        </div>
+      </div>
+      <div class="plan reveal">
+        <h3>Plan 2</h3>
+        <div class="dias">Lunes, miércoles y viernes</div>
+        <div class="precio">
+          <strong>$36.000 efectivo</strong>
+          <span>$38.160 transferencia</span>
+        </div>
+      </div>
+      <div class="plan reveal">
+        <h3>Plan 3</h3>
+        <div class="dias">Todos los días · misma instructora</div>
+        <div class="precio">
+          <strong>$62.000 efectivo</strong>
+          <span>$65.800 transferencia</span>
+        </div>
+      </div>
+      <div class="plan reveal">
+        <h3>Plan 4</h3>
+        <div class="dias">Todos los días · distintas instructoras</div>
+        <div class="precio">
+          <strong>$66.000 efectivo</strong>
+          <span>$69.960 transferencia</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Contacto</span>
+      <h2>Escribinos y <em>reservá</em>.</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.5 8.5 0 01-12.3 7.6L3 21l1.9-5.7A8.5 8.5 0 1121 11.5z"/></svg>
+          <div><div class="label">WhatsApp</div><div class="val">+54 9 376 432-3974</div></div>
+        </div>
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          <div><div class="label">Instagram</div><div class="val">@11_11fit</div></div>
+        </div>
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6-7-11a7 7 0 0114 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          <div><div class="label">Dirección</div><div class="val">Av. Uruguay 3660, Posadas, Misiones</div></div>
+        </div>
+      </div>
+      <div class="contact-cta reveal">
+        <h3>¿Arrancamos esta semana?</h3>
+        <p>Escribinos por WhatsApp y te contamos horarios disponibles.</p>
+        <a class="btn" href="https://wa.me/5493764323974?text=Hola!%20Quiero%20reservar%20una%20clase%20de%20Jumping" target="_blank" rel="noopener">Reservar por WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Once Once Fit · Posadas, Misiones · <a href="https://instagram.com/11_11fit" target="_blank" rel="noopener">@11_11fit</a>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/5493764323974?text=Hola!%20Quiero%20info%20sobre%20las%20clases" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.3-1.4c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3.1.8.8-3-.2-.3c-.8-1.3-1.2-2.8-1.2-4.4 0-4.6 3.7-8.3 8.3-8.3s8.3 3.7 8.3 8.3-3.7 8.3-8.3 8.3z"/></svg>
+</a>
+
+<script>
+// Menú móvil
+const burger=document.querySelector('.burger');
+const menu=document.getElementById('menu');
+burger.addEventListener('click',()=>{
+  const open=menu.classList.toggle('open');
+  burger.classList.toggle('open',open);
+  burger.setAttribute('aria-expanded',open);
+  document.body.style.overflow=open?'hidden':'';
+});
+menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  menu.classList.remove('open');burger.classList.remove('open');
+  burger.setAttribute('aria-expanded',false);document.body.style.overflow='';
+}));
+
+// Reveal al hacer scroll
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// Nav con fondo sólido al scrollear
+const nav=document.querySelector('header.nav');
+window.addEventListener('scroll',()=>{
+  nav.style.background=window.scrollY>40?'rgba(29,29,27,.92)':'rgba(29,29,27,.55)';
+});
+</script>
+</body>
+</html>
